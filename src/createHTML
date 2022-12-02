@@ -1,0 +1,109 @@
+const createManager = function (manager) {
+    return `
+    <div class="card" style="width: 18rem;">
+    <div class="card-header">
+        Manager : ${manager.name}
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">ID: ${manager.id}</li>
+        <li class="list-group-item"> <a href="mailto:${manager.email}">${manager.email}</a> </li>
+        <li class="list-group-item">Office Number: ${manager.officeNumber}</a></li>
+    </ul>
+    </div>
+    `
+};
+
+const createEngineer = function (manager) {
+    return `
+    <div class="card" style="width: 18rem;">
+    <div class="card-header">
+        Engineer : ${engineer.name}
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">ID: ${engineer.id}</li>
+        <li class="list-group-item"> Email: <a href="mailto:${engineer.email}">${engineer.email}</a> </li>
+        <li class="list-group-item"> GitHub: <a href="https://github.com/${engineer.github}">${engineer.github}</a></li>
+    </ul>
+    </div>
+    `
+};
+
+const createIntern = function (manager) {
+    return `
+    <div class="card" style="width: 18rem;">
+    <div class="card-header">
+        Intern : ${manager.name}
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item"> ID: ${intern.id}</li>
+        <li class="list-group-item"> Email <a href="mailto:${intern.email}">${intern.email}</a> </li>
+        <li class="list-group-item"> School: ${intern.school}</li>
+    </ul>
+    </div>
+    `
+};
+
+createHTML = (data) => {
+    pageArray = [];
+
+    for (let i=0; i< data.length; i++) {
+        const employee = data[i];
+        const role = employee.getRole();
+
+        switch(role) {
+            case 'Manager':
+                const managerCard = createManager(employee);
+                pageArray.push(managerCard);
+            break;
+
+            case 'Engineer':
+                const EngineerCard = createEngineer(employee);
+                pageArray.push(engineerCard);
+            break;
+
+            case 'Intern':
+                const internCard = createIntern(employee);
+                pageArray.push(internCard);
+            break;
+        }
+
+        const employeeCards = pageArray.join('');
+
+        const createTeam = createTeamPage(employeeCards);
+        return createTeam;
+    }
+
+const createTeamPage = function(employeeCards) {
+    return`
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Team Profile</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    </head>
+    <body>
+        <header>
+            <nav class="navbar" id="navbar">
+                <span class="navbar-brand mb-0 h1 w-100 text-center" id="navbar-text">Team Profile</span>
+            </nav>
+        </header>
+        <main>
+            <div class="container">
+                <div class="row justify-content-center" id="team-cards">
+                    <!--Team Cards-->
+                    ${employeeCards}
+                </div>
+            </div>
+        </main>
+        
+    </body>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    </html>
+  `;
+}
+
+}
+
+module.exports = createHtml;

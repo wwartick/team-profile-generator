@@ -6,6 +6,7 @@ const Intern = require('./lib/Intern');
 
 const fs = require('fs');
 const inquirer = require('inquirer');
+const { create } = require('domain');
 
 const workArray = [];
 
@@ -173,3 +174,26 @@ const addEmployee = () => {
         }
     })
 };
+
+const writeFile = data => {
+    fs.writeFile('./dist/index.html', data,err => {
+        if (err) {
+            console.log(err);
+            return;
+        } else {
+            console.log( "Team has been created. See the results in the index.html")
+        }
+    })
+};
+
+addManager()
+    .then(addEmployee)
+    .then(workArray => {
+        return createHTML(workArray);
+    })
+    .then(pageHTML => {
+        return writeFile(pageHTML);
+    })
+    .catch(err => {
+        console.log(err);
+    });
