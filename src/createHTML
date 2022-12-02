@@ -13,7 +13,7 @@ const createManager = function (manager) {
     `
 };
 
-const createEngineer = function (manager) {
+const createEngineer = function (engineer) {
     return `
     <div class="card" style="width: 18rem;">
     <div class="card-header">
@@ -28,11 +28,11 @@ const createEngineer = function (manager) {
     `
 };
 
-const createIntern = function (manager) {
+const createIntern = function (intern) {
     return `
     <div class="card" style="width: 18rem;">
     <div class="card-header">
-        Intern : ${manager.name}
+        Intern : ${intern.name}
     </div>
     <ul class="list-group list-group-flush">
         <li class="list-group-item"> ID: ${intern.id}</li>
@@ -57,7 +57,7 @@ createHTML = (data) => {
             break;
 
             case 'Engineer':
-                const EngineerCard = createEngineer(employee);
+                const engineerCard = createEngineer(employee);
                 pageArray.push(engineerCard);
             break;
 
@@ -66,12 +66,12 @@ createHTML = (data) => {
                 pageArray.push(internCard);
             break;
         }
-
+    }
         const employeeCards = pageArray.join('');
 
         const createTeam = createTeamPage(employeeCards);
         return createTeam;
-    }
+}
 
 const createTeamPage = function(employeeCards) {
     return`
@@ -104,6 +104,5 @@ const createTeamPage = function(employeeCards) {
   `;
 }
 
-}
 
-module.exports = createHtml;
+module.exports = createHTML;

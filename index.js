@@ -6,12 +6,11 @@ const Intern = require('./lib/Intern');
 
 const fs = require('fs');
 const inquirer = require('inquirer');
-const { create } = require('domain');
 
 const workArray = [];
 
 const addManager = () => {
-    return inquirer.createPromptModule([
+    return inquirer.prompt([
         {
             type: 'input',
             name: 'name',
@@ -42,7 +41,7 @@ const addManager = () => {
             type: 'input',
             name: 'email',
             message: 'Email of the manager for this project',
-            validate: emailInput => {
+            validate: email => {
                 validEmailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)
                 if (validEmailRegex) {
                     return true;
@@ -65,7 +64,8 @@ const addManager = () => {
                 }
             }
         }
-    ]) .then(managerData => {
+    ])
+    .then(managerData => {
         const { name, id, email, officeNumber} = managerData;
         const manager = new Manager (name, id, email, officeNumber);
 
@@ -111,7 +111,7 @@ const addEmployee = () => {
             type: 'input',
             name: 'email',
             message: 'Email of the employee for this project',
-            validate: emailInput => {
+            validate: email => {
                 validEmailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)
                 if (validEmailRegex) {
                     return true;
@@ -155,7 +155,8 @@ const addEmployee = () => {
             message: 'Are there any other employees for this project?',
             default: 'false'
         }
-    ]) .then(employeeData => {
+    ])
+    .then(employeeData => {
         let {name, id, email, role, github, school, addMoreEmployees} = employeeData;
         let employee;
 
@@ -167,7 +168,7 @@ const addEmployee = () => {
 
         workArray.push(employee);
 
-        if (confirmAddEmployee) {
+        if (addMoreEmployees) {
             return addEmployee(workArray);
         } else {
             return workArray;
